@@ -30,7 +30,6 @@ const ProfileScreen = () => {
     if (!userInfo) {
       history.push('/login')
     } else {
-      console.log(user)
       if (!user.name) {
         dispatch(getUserDetails('profile'))
         dispatch(ListMyOrders())
