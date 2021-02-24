@@ -1,21 +1,19 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
-
-:root {
-  --darkBlue: #202a33;
-  --lightgrey: #f2f3f4;
-  --yellow: #fdcb1c;
-  --red: #ed2b49;
-  --green: #fdcb1c;
-  --darkgrey: #0000008a;
+main {
+  min-height: 80vh;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter";
+.rating h3 {
+  padding: 1rem 0;
 }
-body {
-  background: var(--darkBlue);
-  overflow-x: hidden;
-} */
+.rating span {
+  margin: 0.5rem;
+}
+
+h1 {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+}
+h2 {
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
+}

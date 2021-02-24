@@ -1,0 +1,1 @@
+web: node bakend/server.js
