@@ -28,7 +28,19 @@ import {
   orderDeliverReduser,
 } from './reducers/orderReducers'
 
+const headerReducer = (state = { open: false }, action) => {
+  switch (action.type) {
+    case 'TOGGLE_SIDEBAR':
+      return {
+        open: !state.open,
+      }
+    default:
+      return state
+  }
+}
+
 const reducer = combineReducers({
+  header: headerReducer,
   createProduct: createProductReducer,
   productList: productListReducer,
   productDetails: productDetailsReducer,

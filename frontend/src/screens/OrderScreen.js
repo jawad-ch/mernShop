@@ -182,7 +182,7 @@ const OrderScreen = () => {
                   <Col>${order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              {!order.isPaid && (
+              {userInfo && !userInfo.isAdmin && !order.isPaid && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   {!sdkReady ? (
@@ -198,7 +198,7 @@ const OrderScreen = () => {
               {userInfo &&
                 userInfo.isAdmin &&
                 order.isPaid &&
-                !order.isDeliverd && (
+                !order.isDelivered && (
                   <ListGroup.Item>
                     {loadingDeliver && <Loader />}
                     <Button

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+// import { Button, Form } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 const SearchBox = () => {
   const [keyWord, setKeyWord] = useState('')
@@ -13,20 +13,16 @@ const SearchBox = () => {
     }
   }
   return (
-    <Form onSubmit={submitHandler} inline>
-      <Form.Group controlId="q">
-        <Form.Control
-          type="text"
-          placeholder="Search Products..."
-          value={keyWord}
-          className="mr-sm-2 ml-sm-5"
-          onChange={(e) => setKeyWord(e.target.value)}
-        ></Form.Control>
-      </Form.Group>
-      <Button type="submit" variant="outline-success" className="p-2">
-        search
-      </Button>
-    </Form>
+    <form onSubmit={submitHandler} className="header__search">
+      <input
+        type="search"
+        value={keyWord}
+        onChange={(e) => setKeyWord(e.target.value)}
+        placeholder="Search"
+        className="header__input"
+      />
+      <i className="bx bx-search header__icon"></i>
+    </form>
   )
 }
 

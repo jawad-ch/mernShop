@@ -1,70 +1,30 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
-import { logout } from '../actions/userActions'
+import { Link } from 'react-router-dom'
 import SearchBox from './SearchBox'
+import logo from '../assets/img/logo.png'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Header = () => {
-  const { userInfo } = useSelector((state) => state.userLogin)
+  const { open } = useSelector((state) => state.header)
 
   const dispatch = useDispatch()
 
-  const logoutHandler = () => {
-    dispatch(logout())
-  }
-
   return (
-    <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
-        <Container>
-          <LinkContainer to="/">
-            <Navbar.Brand>MerShop</Navbar.Brand>
-          </LinkContainer>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <SearchBox />
-            <Nav className="ml-auto">
-              <LinkContainer to="/cart">
-                <Nav.Link>
-                  <i className="fas fa-shopping-cart"></i> Cart
-                </Nav.Link>
-              </LinkContainer>
-              {userInfo ? (
-                <NavDropdown title={`${userInfo.name}`} id="username">
-                  <LinkContainer to="/profile">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
-              ) : (
-                <LinkContainer to="/login">
-                  <Nav.Link>
-                    <i className="fas fa-user"></i> Sign-in
-                  </Nav.Link>
-                </LinkContainer>
-              )}
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="admin" id="admin">
-                  <LinkContainer to="/admin/userList">
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
+    <header className="header">
+      <div className="header__container">
+        <img src={logo} alt="" className="header__img" />
 
-                  <LinkContainer to="/admin/productList">
-                    <NavDropdown.Item>Products</NavDropdown.Item>
-                  </LinkContainer>
-
-                  <LinkContainer to="/admin/orderList">
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+        <Link to="/" className="header__logo">
+          MernShop
+        </Link>
+        <SearchBox />
+        <div
+          className="header__toggle"
+          onClick={() => dispatch({ type: 'TOGGLE_SIDEBAR' })}
+        >
+          <i className={`bx bx-${open ? 'x' : 'menu'}`}></i>
+        </div>
+      </div>
     </header>
   )
 }
