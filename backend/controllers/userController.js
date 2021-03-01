@@ -1,8 +1,8 @@
-import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
 import generateToken from '../utils/generateToken.js'
+import HttpError from '../utils/httpError.js'
 
-const authUser = asyncHandler(async (req, res) => {
+const authUser = async (req, res, next) => {
   const { email, password } = req.body
 
   const user = await User.findOne({ email })
@@ -16,20 +16,17 @@ const authUser = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
     })
   } else {
-    res.status(401)
-    throw new Error('invalide email or password')
+    next(new HttpError('invalide email or password', 401))
   }
-  // res.json({ email, password })
-})
+}
 
-const registerUser = asyncHandler(async (req, res) => {
+const registerUser = async (req, res, next) => {
   const { name, email, password } = req.body
 
   const userExist = await User.findOne({ email })
 
   if (userExist) {
-    res.status(400)
-    throw new Error('User already exists')
+    next(new HttpError('User already exists', 400))
   }
 
   const user = await User.create({
@@ -47,12 +44,11 @@ const registerUser = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
     })
   } else {
-    res.status(400)
-    throw new Error('invalide user data')
+    next(new HttpError('invalide user data', 400))
   }
-})
+}
 
-const getUserProfile = asyncHandler(async (req, res) => {
+const getUserProfile = async (req, res, next) => {
   const user = await User.findById(req.user._id)
 
   if (user) {
@@ -63,12 +59,11 @@ const getUserProfile = asyncHandler(async (req, res) => {
       isAdmin: user.isAdmin,
     })
   } else {
-    res.status(404)
-    throw new Error('user Not found')
+    next(new HttpError('user Not found', 404))
   }
-})
+}
 
-const updateUserProfile = asyncHandler(async (req, res) => {
+const updateUserProfile = async (req, res, next) => {
   const user = await User.findById(req.user._id)
 
   if (user) {
@@ -88,40 +83,37 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       token: generateToken(updatedUser._id),
     })
   } else {
-    res.status(404)
-    throw new Error('user Not found')
+    next(new HttpError('user Not found', 404))
   }
-})
+}
 
 // admin routes
 
-const getUsers = asyncHandler(async (req, res) => {
+const getUsers = async (req, res) => {
   const users = await User.find({})
   res.json(users)
-})
+}
 
-const deleteUser = asyncHandler(async (req, res) => {
+const deleteUser = async (req, res, next) => {
   const user = await User.findById(req.params.id)
   if (user) {
     await user.remove()
     res.json({ message: 'user remved' })
   } else {
-    res.status(404)
-    throw new Error('User not found')
+    next(new HttpError('user Not found', 404))
   }
-})
+}
 
-const getUserById = asyncHandler(async (req, res) => {
+const getUserById = async (req, res, next) => {
   const user = await User.findById(req.params.id).select('-password')
   if (user) {
     res.json(user)
   } else {
-    res.status(404)
-    throw new Error('User not found')
+    next(new HttpError('user Not found', 404))
   }
-})
+}
 
-const updateUser = asyncHandler(async (req, res) => {
+const updateUser = async (req, res, next) => {
   const user = await User.findById(req.params.id)
 
   if (user) {
@@ -138,10 +130,9 @@ const updateUser = asyncHandler(async (req, res) => {
       isAdmin: updatedUser.isAdmin,
     })
   } else {
-    res.status(404)
-    throw new Error('user Not found')
+    next(new HttpError('user Not found', 404))
   }
-})
+}
 
 export {
   authUser,

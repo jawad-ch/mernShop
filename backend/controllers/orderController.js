@@ -1,7 +1,7 @@
-import asyncHandler from 'express-async-handler'
 import Order from '../models/orderModel.js'
+import HttpError from '../utils/httpError.js'
 
-export const addOrderItems = asyncHandler(async (req, res) => {
+export const addOrderItems = async (req, res, next) => {
   const {
     orderItems,
     shippingAddress,
@@ -12,8 +12,7 @@ export const addOrderItems = asyncHandler(async (req, res) => {
     totalPrice,
   } = req.body
   if (orderItems && orderItems.length === 0) {
-    throw new Error('No order Items')
-    return
+    next(new HttpError('No order Items', 404))
   } else {
     const order = new Order({
       orderItems,
@@ -30,9 +29,9 @@ export const addOrderItems = asyncHandler(async (req, res) => {
 
     res.status(200).json(createOrder)
   }
-})
+}
 
-export const getOrderById = asyncHandler(async (req, res) => {
+export const getOrderById = async (req, res) => {
   const order = await Order.findById(req.params.id).populate(
     'user',
     'name email'
@@ -41,12 +40,11 @@ export const getOrderById = asyncHandler(async (req, res) => {
   if (order) {
     res.json(order)
   } else {
-    res.status(404)
-    throw new Error('Order Not found')
+    next(new HttpError('Order Not found', 404))
   }
-})
+}
 
-export const updateOrderToPaid = asyncHandler(async (req, res) => {
+export const updateOrderToPaid = async (req, res) => {
   const order = await Order.findById(req.params.id)
 
   if (order) {
@@ -62,12 +60,11 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
     const updatedOrder = await order.save()
     res.json(updatedOrder)
   } else {
-    res.status(404)
-    throw new Error('Order Not found')
+    next(new HttpError('Order Not found', 404))
   }
-})
+}
 
-export const updateOrderToDelivered = asyncHandler(async (req, res) => {
+export const updateOrderToDelivered = async (req, res) => {
   const order = await Order.findById(req.params.id)
 
   if (order) {
@@ -77,19 +74,18 @@ export const updateOrderToDelivered = asyncHandler(async (req, res) => {
     const updatedOrder = await order.save()
     res.json(updatedOrder)
   } else {
-    res.status(404)
-    throw new Error('Order Not found')
+    next(new HttpError('Order Not found', 404))
   }
-})
+}
 
-export const getMyOrders = asyncHandler(async (req, res) => {
+export const getMyOrders = async (req, res) => {
   const orders = await Order.find({ user: req.user._id })
 
   res.json(orders)
-})
+}
 
-export const getAllOrders = asyncHandler(async (req, res) => {
+export const getAllOrders = async (req, res) => {
   const orders = await Order.find({}).populate('user', 'id name')
 
   res.json(orders)
-})
+}

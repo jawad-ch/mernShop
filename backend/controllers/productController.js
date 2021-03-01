@@ -1,7 +1,7 @@
-import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
+import HttpError from '../utils/httpError.js'
 
-const getProducts = asyncHandler(async (req, res) => {
+const getProducts = async (req, res) => {
   const pageSize = 5
   const page = Number(req.query.pageNumber) || 1
 
@@ -19,31 +19,30 @@ const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1))
-  res.json({ products, page, pages: Math.ceil(count / pageSize) })
-})
 
-const getproductById = asyncHandler(async (req, res) => {
+  res.json({ products, page, pages: Math.ceil(count / pageSize) })
+}
+
+const getproductById = async (req, res, next) => {
   const product = await Product.findById(req.params.id)
   if (product) {
     res.json(product)
   } else {
-    res.status(404)
-    throw new Error('product not found')
+    next(new HttpError('product not found', 404))
   }
-})
+}
 
-const deleteProduct = asyncHandler(async (req, res) => {
+const deleteProduct = async (req, res, next) => {
   const product = await Product.findById(req.params.id)
   if (product) {
     await product.remove()
     res.json({ message: 'product removed' })
   } else {
-    res.status(404)
-    throw new Error('Product not found')
+    next(new HttpError('product not found', 404))
   }
-})
+}
 
-const createProduct = asyncHandler(async (req, res) => {
+const createProduct = async (req, res) => {
   const product = new Product({
     name: 'sample name',
     price: 0,
@@ -59,9 +58,9 @@ const createProduct = asyncHandler(async (req, res) => {
   const createdProduct = await product.save()
 
   res.status(201).json(createdProduct)
-})
+}
 
-const updateProduct = asyncHandler(async (req, res) => {
+const updateProduct = async (req, res, next) => {
   const {
     name,
     price,
@@ -87,12 +86,11 @@ const updateProduct = asyncHandler(async (req, res) => {
 
     res.json(updatedProduct)
   } else {
-    res.status(404)
-    throw new Error('Product not found')
+    next(new HttpError('product not found', 404))
   }
-})
+}
 
-const createProductReview = asyncHandler(async (req, res) => {
+const createProductReview = async (req, res, next) => {
   const { rating, comment } = req.body
 
   const product = await Product.findById(req.params.id)
@@ -103,8 +101,7 @@ const createProductReview = asyncHandler(async (req, res) => {
     )
 
     if (alreadyReviewed) {
-      res.status(400)
-      throw new Error('Product already reviewed')
+      next(new HttpError('Product already reviewed', 400))
     }
 
     const review = {
@@ -123,10 +120,9 @@ const createProductReview = asyncHandler(async (req, res) => {
     product.save()
     res.status(201).json({ message: 'Review added' })
   } else {
-    res.status(404)
-    throw new Error('Product not found')
+    next(new HttpError('Product not found', 404))
   }
-})
+}
 
 export {
   getProducts,
