@@ -1,9 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { logout } from '../actions/userActions'
 const SideBar = () => {
   const { userInfo } = useSelector((state) => state.userLogin)
+
+  const history = useHistory()
 
   const dispatch = useDispatch()
 
@@ -122,7 +124,7 @@ const SideBar = () => {
         {userInfo ? (
           <div
             className="side__link side__logout"
-            onClick={() => dispatch(logout())}
+            onClick={() => dispatch(logout(history))}
           >
             <NavLink logout icon="bx-log-out" title="Log Out" />
           </div>

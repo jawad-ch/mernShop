@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const Header = () => {
   const { open } = useSelector((state) => state.header)
+  const { userInfo } = useSelector((state) => state.userLogin)
 
   const dispatch = useDispatch()
 
@@ -15,7 +16,7 @@ const Header = () => {
         <img src={logo} alt="" className="header__img" />
 
         <Link to="/" className="header__logo">
-          MernShop
+          {userInfo?.email || 'MernShop'}
         </Link>
         <SearchBox />
         <div

@@ -1,50 +1,53 @@
 import React from 'react'
-import { Nav } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+import { Link } from 'react-router-dom'
 
 const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
+  const Step = ({ completed, to, desc }) => {
+    return (
+      <li className={`${completed ? 'completed' : ''}`}>
+        <div className="step">
+          <div className="step-number">
+            <span></span>
+          </div>
+          {completed ? (
+            <Link to={to} className="step-description">
+              {desc}
+            </Link>
+          ) : (
+            <div className={`step-description ${!completed ? 'disable' : ''}`}>
+              {desc}
+            </div>
+          )}
+        </div>
+      </li>
+    )
+  }
+
+  const barWidth = (arr) =>
+    arr.reduce((sum, value) => {
+      if (value) {
+        sum += 25
+      }
+      return sum
+    }, 0)
+
   return (
-    <Nav className="justify-content-center mb-4">
-      <Nav.Item>
-        {step1 ? (
-          <LinkContainer to="/login">
-            <Nav.Link>Sign In</Nav.Link>
-          </LinkContainer>
-        ) : (
-          <Nav.Link disabled>Sign In</Nav.Link>
-        )}
-      </Nav.Item>
-
-      <Nav.Item>
-        {step2 ? (
-          <LinkContainer to="/shipping">
-            <Nav.Link>Shipping</Nav.Link>
-          </LinkContainer>
-        ) : (
-          <Nav.Link disabled>Shipping</Nav.Link>
-        )}
-      </Nav.Item>
-
-      <Nav.Item>
-        {step3 ? (
-          <LinkContainer to="/payment">
-            <Nav.Link>Payment</Nav.Link>
-          </LinkContainer>
-        ) : (
-          <Nav.Link disabled>Payment</Nav.Link>
-        )}
-      </Nav.Item>
-
-      <Nav.Item>
-        {step4 ? (
-          <LinkContainer to="/placeOrder">
-            <Nav.Link>Place Order</Nav.Link>
-          </LinkContainer>
-        ) : (
-          <Nav.Link disabled>Place Order</Nav.Link>
-        )}
-      </Nav.Item>
-    </Nav>
+    <div className="steps">
+      <ul className="steps-container">
+        <Step to="/login" desc="Sign In" completed={step1 ? true : false} />
+        <Step to="/shipping" desc="Shipping" completed={step2 ? true : false} />
+        <Step to="/payment" desc="Payment" completed={step3 ? true : false} />
+        <Step
+          to="/placeOrder"
+          desc="PlaceOrder"
+          completed={step4 ? true : false}
+        />
+      </ul>
+      <div
+        className="step-bar"
+        style={{ width: `${barWidth([step1, step2, step3, step4])}%` }}
+      ></div>
+    </div>
   )
 }
 
