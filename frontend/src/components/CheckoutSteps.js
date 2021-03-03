@@ -26,7 +26,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
   const barWidth = (arr) =>
     arr.reduce((sum, value) => {
       if (value) {
-        sum += 25
+        sum += 33.3
       }
       return sum
     }, 0)
@@ -34,18 +34,17 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
   return (
     <div className="steps">
       <ul className="steps-container">
-        <Step to="/login" desc="Sign In" completed={step1 ? true : false} />
-        <Step to="/shipping" desc="Shipping" completed={step2 ? true : false} />
-        <Step to="/payment" desc="Payment" completed={step3 ? true : false} />
+        <Step to="/shipping" desc="Shipping" completed={step1 ? true : false} />
+        <Step to="/payment" desc="Payment" completed={step2 ? true : false} />
         <Step
           to="/placeOrder"
           desc="PlaceOrder"
-          completed={step4 ? true : false}
+          completed={step3 ? true : false}
         />
       </ul>
       <div
         className="step-bar"
-        style={{ width: `${barWidth([step1, step2, step3, step4])}%` }}
+        style={{ width: `${barWidth([step1, step2, step3])}%` }}
       ></div>
     </div>
   )

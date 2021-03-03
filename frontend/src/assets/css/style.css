@@ -7,10 +7,10 @@
   --nav-width: 219px;
 
   /*========== Colors ==========*/
-  --first-color: #6923d0;
+  --first-color: #929aab;
   --first-color-light: #f4f0fa;
   --title-color: #19181b;
-  --text-color: #58555e;
+  --text-color: #0b0b0d;
   --text-color-light: #a5a1aa;
   --body-color: #f9f6fd;
   --container-color: #ffffff;
@@ -180,6 +180,7 @@ img {
 }
 
 .side__link {
+  width: 10rem;
   display: flex;
   align-items: center;
   color: var(--text-color);
@@ -357,10 +358,10 @@ img {
   list-style: none;
   float: left;
   transition: all 0.5s ease;
-  width: 25%;
+  width: 33.3%;
 }
 .steps .steps-container li .step .step-number {
-  margin: -14px 0 0 0;
+  margin: -14px -4px 0 0;
 }
 .steps .steps-container li .step .step-number span {
   background-color: #ddd;
@@ -383,7 +384,7 @@ img {
   font-size: 16px;
   font-weight: 500;
   font-style: italic;
-  color: #ff334b;
+  color: #44494f;
   float: right;
 }
 .steps .steps-container li .step .step-description.disable {
@@ -393,7 +394,7 @@ img {
   user-select: none;
 }
 .steps .steps-container li.completed .step .step-number span {
-  background-color: #ff334b;
+  background-color: #44494f;
 }
 .steps .steps-container li.completed .step .step-number span:after {
   background-color: #fff;
@@ -413,7 +414,7 @@ img {
   -webkit-box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.15);
 }
 .steps .step-bar {
-  background-color: #ff334b;
+  background-color: #44494f;
   height: 7px;
   position: absolute;
   top: 30px;

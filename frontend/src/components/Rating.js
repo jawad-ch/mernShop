@@ -1,77 +1,41 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { EmptyStarIcon, FullStarIcon, HalfStarIcon } from './icons'
 
-const Rating = ({ value, text, color }) => {
+const Rating = ({ value, text }) => {
+  const Star = ({ starVal }) => {
+    switch (starVal) {
+      case 'FULL':
+        return <FullStarIcon />
+      case 'HALF':
+        return <HalfStarIcon />
+      default:
+        return <EmptyStarIcon />
+    }
+  }
+
   return (
     <div className="rating">
       <span>
-        <i
-          style={{ color }}
-          className={
-            value >= 1
-              ? 'fas fa-star'
-              : value >= 0.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-          }
-        ></i>
+        <Star starVal={value >= 1 ? 'FULL' : value >= 0.5 ? 'HALF' : 'EPMTY'} />
       </span>
       <span>
-        <i
-          style={{ color }}
-          className={
-            value >= 2
-              ? 'fas fa-star'
-              : value >= 1.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-          }
-        ></i>
+        <Star starVal={value >= 2 ? 'FULL' : value >= 1.5 ? 'HALF' : 'EPMTY'} />
       </span>
       <span>
-        <i
-          style={{ color }}
-          className={
-            value >= 3
-              ? 'fas fa-star'
-              : value >= 2.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-          }
-        ></i>
+        <Star starVal={value >= 3 ? 'FULL' : value >= 2.5 ? 'HALF' : 'EPMTY'} />
       </span>
       <span>
-        <i
-          style={{ color }}
-          className={
-            value >= 4
-              ? 'fas fa-star'
-              : value >= 3.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-          }
-        ></i>
+        <Star starVal={value >= 4 ? 'FULL' : value >= 3.5 ? 'HALF' : 'EPMTY'} />
       </span>
       <span>
-        <i
-          style={{ color }}
-          className={
-            value >= 5
-              ? 'fas fa-star'
-              : value >= 4.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-          }
-        ></i>
+        <Star starVal={value >= 5 ? 'FULL' : value >= 4.5 ? 'HALF' : 'EPMTY'} />
       </span>
       <span>{text && text}</span>
     </div>
   )
 }
 
-Rating.defaultProps = {
-  color: '#f8e825',
-}
 Rating.prototype = {
   value: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,

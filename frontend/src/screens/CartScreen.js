@@ -4,6 +4,7 @@ import { Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from './../components/Message'
 import { addToCart, removeFromCart } from './../actions/cartActions'
+import { TrashIcon } from '../components/icons'
 
 const CartScreen = () => {
   const history = useHistory()
@@ -83,7 +84,7 @@ const CartScreen = () => {
                       variant="light"
                       onClick={() => removeFromCartHandler(cartItem.product)}
                     >
-                      <i className="fas fa-trash"></i>
+                      <TrashIcon />
                     </Button>
                   </Col>
                 </Row>

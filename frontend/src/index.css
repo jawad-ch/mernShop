@@ -8,6 +8,13 @@ main {
 .rating span {
   margin: 0.5rem;
 }
+.rating span:first-child,
+.rating span:last-child {
+  margin-left: 0;
+}
+.rating span:last-child {
+  display: block;
+}
 
 h1 {
   font-size: 1.8rem;

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import SearchBox from './SearchBox'
 import logo from '../assets/img/logo.png'
 import { useDispatch, useSelector } from 'react-redux'
+import { MenuIcon, CloseIcon } from './icons'
 
 const Header = () => {
   const { open } = useSelector((state) => state.header)
@@ -23,7 +24,7 @@ const Header = () => {
           className="header__toggle"
           onClick={() => dispatch({ type: 'TOGGLE_SIDEBAR' })}
         >
-          <i className={`bx bx-${open ? 'x' : 'menu'}`}></i>
+          {open ? <CloseIcon /> : <MenuIcon />}
         </div>
       </div>
     </header>

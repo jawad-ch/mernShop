@@ -12,6 +12,7 @@ import {
   createProduct,
 } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
+import { TrashIcon, EditIcon, PlusIcon } from '../components/icons'
 
 const ProductListScreen = () => {
   const history = useHistory()
@@ -72,7 +73,7 @@ const ProductListScreen = () => {
         <Col className="text-right">
           <Button className="my-3" onClick={createProductHandler}>
             {' '}
-            <i className="fas fa-plus"></i> Create product
+            <PlusIcon /> Create product
           </Button>
         </Col>
       </Row>
@@ -106,18 +107,18 @@ const ProductListScreen = () => {
                     <td>${product.price}</td>
                     <td>{product.category}</td>
                     <td>{product.brand}</td>
-                    <td>
+                    <td className="d-flex justify-content-center">
                       <LinkContainer to={`/admin/product/${product._id}/edit`}>
                         <Button variant="light" className="btn-sm">
-                          <i className="fas fa-edit"></i>
+                          <EditIcon color="2fd12f" />
                         </Button>
                       </LinkContainer>
                       <Button
-                        variant="danger"
+                        variant="light"
                         className="btn-sm"
                         onClick={() => deletHandler(product._id)}
                       >
-                        <i className="fas fa-trash"></i>
+                        <TrashIcon color="ff0000" />
                       </Button>
                     </td>
                   </tr>

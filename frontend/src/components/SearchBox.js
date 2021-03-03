@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 // import { Button, Form } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
+import { SearchIcon } from './icons'
 const SearchBox = () => {
   const [keyWord, setKeyWord] = useState('')
   const history = useHistory()
@@ -21,7 +22,7 @@ const SearchBox = () => {
         placeholder="Search"
         className="header__input"
       />
-      <i className="bx bx-search header__icon"></i>
+      <SearchIcon />
     </form>
   )
 }

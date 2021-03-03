@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from './../components/Loader'
 import { listUsers, deleteUser } from './../actions/userActions'
+import { CheckIcon, CloseIcon, EditIcon, TrashIcon } from '../components/icons'
 const UserListScreen = () => {
   const history = useHistory()
 
@@ -58,26 +59,23 @@ const UserListScreen = () => {
                   </td>
                   <td>
                     {user.isAdmin ? (
-                      <i
-                        className="fas fa-check"
-                        style={{ color: 'green' }}
-                      ></i>
+                      <CheckIcon color="2fd12f" />
                     ) : (
-                      <i className="fas fa-times" style={{ color: 'red' }}></i>
+                      <CloseIcon color="ff0000" />
                     )}
                   </td>
-                  <td>
+                  <td className="d-flex justify-content-center">
                     <LinkContainer to={`/admin/user/${user._id}/edit`}>
                       <Button variant="light" className="btn-sm">
-                        <i className="fas fa-edit"></i>
+                        <EditIcon color="2fd12f" />
                       </Button>
                     </LinkContainer>
                     <Button
-                      variant="danger"
+                      variant="light"
                       className="btn-sm"
                       onClick={() => deletHandler(user._id)}
                     >
-                      <i className="fas fa-trash"></i>
+                      <TrashIcon color="ff0000" />
                     </Button>
                   </td>
                 </tr>

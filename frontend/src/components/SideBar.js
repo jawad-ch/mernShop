@@ -2,6 +2,16 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { logout } from '../actions/userActions'
+import {
+  LogoIcon,
+  DashboardIcon,
+  HomeIcon,
+  UserIcon,
+  CartIcon,
+  OrderIcon,
+  LoginIcon,
+  LogoutIcon,
+} from './icons'
 const SideBar = () => {
   const { userInfo } = useSelector((state) => state.userLogin)
 
@@ -11,14 +21,16 @@ const SideBar = () => {
 
   const { open } = useSelector((state) => state.header)
 
-  const NavLink = ({ logo, icon, title, dropDown }) => {
+  const NavLink = ({ logo, Icon, title, dropDown }) => {
     return (
       <>
-        <i className={`bx ${dropDown ? icon.icon : icon} side__icon`}></i>
+        {/* <div > */}
+        <Icon />
+        {/* </div> */}
         <span className={`side__${logo ? 'logo-name' : 'name'}`}>{title}</span>
         {dropDown ? (
           <i
-            className={`bx ${icon.dropDown} side__icon side__dropdown-icon`}
+            className={`bx ${dropDown.icon} side__icon side__dropdown-icon`}
           ></i>
         ) : (
           ''
@@ -32,7 +44,7 @@ const SideBar = () => {
       <aside className="side__container">
         <div>
           <Link to="/" className="side__link side__logo">
-            <NavLink logo icon="bx-disc" title="MernShop" />
+            <NavLink logo Icon={LogoIcon} title="MernShop" />
           </Link>
 
           <div className="side__list">
@@ -42,11 +54,10 @@ const SideBar = () => {
                 <div className="side__dropdown">
                   <div className="side__link">
                     <NavLink
-                      dropDown
-                      icon={{
-                        icon: 'bxs-dashboard',
-                        dropDown: 'bx-chevron-down',
+                      dropDown={{
+                        icon: 'bx-chevron-down',
                       }}
+                      Icon={DashboardIcon}
                       title="Dashboard"
                     />
                   </div>
@@ -63,13 +74,13 @@ const SideBar = () => {
                         to="/admin/productList"
                         className="side__dropdown-item"
                       >
-                        Users
+                        Products
                       </Link>
                       <Link
                         to="/admin/orderList"
                         className="side__dropdown-item"
                       >
-                        Users
+                        Orders
                       </Link>
                     </div>
                   </div>
@@ -81,13 +92,15 @@ const SideBar = () => {
               <h3 className="side__subtitle">Profile</h3>
 
               <Link to="/" className="side__link">
-                <NavLink icon="bx-home" title="Home" />
+                <NavLink Icon={HomeIcon} title="Home" />
               </Link>
               <div className="side__dropdown">
                 <div className="side__link">
                   <NavLink
-                    dropDown
-                    icon={{ icon: 'bx-user', dropDown: 'bx-chevron-down' }}
+                    dropDown={{
+                      icon: 'bx-chevron-down',
+                    }}
+                    Icon={UserIcon}
                     title="Account"
                   />
                 </div>
@@ -112,10 +125,10 @@ const SideBar = () => {
               <h3 className="side__subtitle">Shop</h3>
 
               <Link to="/cart" className="side__link">
-                <NavLink icon="bx-cart" title="Cart" />
+                <NavLink Icon={CartIcon} title="Cart" />
               </Link>
               <Link to="/profile" className="side__link">
-                <NavLink icon="bx-notepad" title="My Orders" />
+                <NavLink Icon={OrderIcon} title="My Orders" />
               </Link>
             </div>
           </div>
@@ -126,11 +139,11 @@ const SideBar = () => {
             className="side__link side__logout"
             onClick={() => dispatch(logout(history))}
           >
-            <NavLink logout icon="bx-log-out" title="Log Out" />
+            <NavLink Icon={LogoutIcon} title="Log Out" />
           </div>
         ) : (
           <Link to="/login" className="side__link side__logout">
-            <NavLink logout icon="bx-log-in-circle" title="Login" />
+            <NavLink Icon={LoginIcon} title="Login" />
           </Link>
         )}
       </aside>
